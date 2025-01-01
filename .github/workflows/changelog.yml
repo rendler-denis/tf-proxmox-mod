@@ -3,31 +3,49 @@ name: Module Changelog
 on:
   push:
     branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
+
+# it is required to be able to push back to the repository
+permissions:
+  contents: write
 
 jobs:
   create-changelog:
     runs-on: ubuntu-latest
-    # Add this condition to prevent the loop
-    if: ${{ !contains(github.event.head_commit.message, 'Add changelog for') }}
+    # Add this condition to prevent an infinite loop
+    if: ${{ !contains(github.event.head_commit.message, 'Add changelog') }}
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-          fetch-depth: 0
+        fetch-depth: 0
 
-    # Generate the changelog for this release
+    - name: Extract version from PR title
+      id: version
+      run: |
+        PR_TITLE="${{ github.event.head_commit.message }}"
+        echo "Processing PR title: $PR_TITLE"
+
+        # Take only the first version number found
+        VERSION=$(echo "$PR_TITLE" | grep -oE "version: [0-9]+\.[0-9]+\.[0-9]+" | head -n 1 | cut -d' ' -f2)
+
+        if [ ! -z "$VERSION" ]; then
+          echo "Found version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        else
+          echo "No version found in PR title"
+          exit 0
+        fi
+
     - name: Generate changelog
-      uses: docker://quay.io/git-chglog/git-chglog:latest
-      with:
-        git-chglog -o RELEASE_CHANGELOG.md ${{ github.ref_name }}
+      if: steps.version.outputs.version != ''
+      run: "docker run --rm -v ${GITHUB_WORKSPACE}:/workdir -w /workdir quay.io/git-chglog/git-chglog:latest --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md"
 
     - name: Create commit with changelog
+      if: steps.version.outputs.version != ''
       run: |
         git config user.name "Denis Rendler (GitHub Actions)"
         git config user.email "connect@rendler.net"
-        git add RELEASE_CHANGELOG.md
-        git commit -m "Add changelog for ${{ github.ref_name }}"
+        git add CHANGELOG.md
+        git commit -m "Add changelog"
         git push origin main

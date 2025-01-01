@@ -21,11 +21,13 @@ jobs:
       - name: Create release archive
         run: |
           # Exclude unnecessary files from the archive
+          mkdir release && \
           tar --exclude='.git' \
               --exclude='.github' \
               --exclude='test' \
               --exclude='.gitignore' \
               --exclude='.chglog' \
+              --exclude='release' \
               -czf release-${{ github.ref_name }}.tar.gz .
 
       # Create the GitHub release
@@ -34,7 +36,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body_path: RELEASE_CHANGELOG.md
+          body_path: CHANGELOG.md
           files: |
             release-${{ github.ref_name }}.tar.gz
           draft: false
