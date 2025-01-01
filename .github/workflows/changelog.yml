@@ -1,0 +1,33 @@
+name: Module Changelog
+
+on:
+  push:
+    branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+
+jobs:
+  create-changelog:
+    runs-on: ubuntu-latest
+    # Add this condition to prevent the loop
+    if: ${{ !contains(github.event.head_commit.message, 'Add changelog for') }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+          fetch-depth: 0
+
+    # Generate the changelog for this release
+    - name: Generate changelog
+      uses: docker://quay.io/git-chglog/git-chglog:latest
+      with:
+        git-chglog -o RELEASE_CHANGELOG.md ${{ github.ref_name }}
+
+    - name: Create commit with changelog
+      run: |
+        git config user.name "Denis Rendler (GitHub Actions)"
+        git config user.email "connect@rendler.net"
+        git add RELEASE_CHANGELOG.md
+        git commit -m "Add changelog for ${{ github.ref_name }}"
+        git push origin main

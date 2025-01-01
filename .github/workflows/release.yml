@@ -1,0 +1,41 @@
+name: Create Release Package
+
+on:
+  push:
+    tags:
+      - '*'  # Triggers on version tags like 1.0.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed for creating releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetches complete history for accurate changelog
+
+      # Create release archive
+      - name: Create release archive
+        run: |
+          # Exclude unnecessary files from the archive
+          tar --exclude='.git' \
+              --exclude='.github' \
+              --exclude='test' \
+              --exclude='.gitignore' \
+              --exclude='.chglog' \
+              -czf release-${{ github.ref_name }}.tar.gz .
+
+      # Create the GitHub release
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body_path: RELEASE_CHANGELOG.md
+          files: |
+            release-${{ github.ref_name }}.tar.gz
+          draft: false
+          prerelease: false
