@@ -10,6 +10,11 @@ NOTE: unfortunately it seems that OpenTofu registry does not have the required
 provider and thus it cannot install it. Either use Terraform or install the provide
 manually.
 
+## Requirements
+
+The module uses the `MaartendeKruijf/proxmox` which at the time of last update it was the only
+provider supporting Proxmox 8.
+
 ## Usage
 
 ```hcl
