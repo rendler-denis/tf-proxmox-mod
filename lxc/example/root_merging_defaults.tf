@@ -4,7 +4,7 @@
 # License: Check the LICENSE file or the repository for the license of the module.
 
 module "pve_lxc" {
-  source = "github.com/rendler-denis/tf-proxmox-mod//lxc"
+  source = "github.com/rendler-denis/tf-proxmox-mod//lxc?ref=1.0.0"
 
   for_each = { for name, config in var.lxc : name => merge(local.default_lxc, config) }
 

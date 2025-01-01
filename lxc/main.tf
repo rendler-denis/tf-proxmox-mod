@@ -9,6 +9,15 @@ terraform {
   required_providers {
     proxmox = {
       source = "MaartendeKruijf/proxmox"
+      version = "0.0.1"
+    }
+    local-exec = {
+      source = "hashicorp/local-exec"
+      version = "^2.5"
+    }
+    null = {
+      source = "hashicorp/null"
+      version = "^3.2"
     }
   }
 }
