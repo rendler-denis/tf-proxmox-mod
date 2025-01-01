@@ -1,0 +1,32 @@
+name: Terraform Linting
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '**.tf'    # Only trigger on Terraform file changes
+      - '.tflint.hcl'  # Also trigger if TFLint config changes
+
+jobs:
+  tflint:
+    name: Run TFLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest  # You can specify a version like "v0.44.1"
+
+      - name: Initialize TFLint
+        run: tflint --init
+        # This downloads any plugins specified in .tflint.hcl
+
+      - name: Run TFLint
+        run: tflint -f compact
+        # The -f compact flag provides more concise output formatting
