@@ -28,7 +28,7 @@ jobs:
               --exclude='.gitignore' \
               --exclude='.chglog' \
               --exclude='release' \
-              -czf release-${{ github.ref_name }}.tar.gz .
+              -czf release/release-${{ github.ref_name }}.tar.gz .
 
       # Create the GitHub release
       - name: Create Release
