@@ -12,12 +12,12 @@ terraform {
       version = "0.0.1"
     }
     local-exec = {
-      source = "hashicorp/local-exec"
-      version = "^2.5"
+      source = "hashicorp/local"
+      version = ">= 2.5"
     }
     null = {
       source = "hashicorp/null"
-      version = "^3.2"
+      version = ">= 3.2"
     }
   }
 }
