@@ -70,6 +70,15 @@ resource "proxmox_lxc" "pve_lxc" {
     tag    = var.net.tag
     gw     = var.net.ip != "dhcp" ? var.net.gateway : null
   }
+
+  lifecycle {
+    ignore_changes = [
+     tags,
+     ssh_public_keys,
+     password,
+     target_node,
+    ]
+  }
 }
 
 // This is required as most LXC templates do not have SSH installed
