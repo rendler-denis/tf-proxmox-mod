@@ -138,3 +138,20 @@ variable "proxmox_ssh" {
   type        = string
   description = "SSH connection string for Proxmox host (e.g., user@proxmox-host)"
 }
+
+variable "hagroup" {
+  type        = string
+  description = "The High-Availability group where to place the container"
+  default     = null
+}
+
+variable "hastate" {
+  type        = string
+  description = "The preffered state for the container when the HA is triggered"
+  default     = null
+
+  validation {
+    condition     = var.hastate == null ? true : contains(["started", "stopped", "ignored", "disabled"], var.hastate)
+    error_message = "hastate must be one of 'started', 'stopped', 'ignored', 'disabled', or 'null'."
+  }
+}

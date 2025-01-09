@@ -37,6 +37,9 @@ resource "proxmox_lxc" "pve_lxc" {
   vmid   = var.vmid
   start  = var.state
 
+  hagroup = var.hagroup
+  hastate = var.hastate
+
   ssh_public_keys = var.ssh_keys
   password        = var.root_pass
 
@@ -66,6 +69,15 @@ resource "proxmox_lxc" "pve_lxc" {
     ip6    = "dhcp"
     tag    = var.net.tag
     gw     = var.net.ip != "dhcp" ? var.net.gateway : null
+  }
+
+  lifecycle {
+    ignore_changes = [
+     tags,
+     ssh_public_keys,
+     password,
+     target_node,
+    ]
   }
 }
 
