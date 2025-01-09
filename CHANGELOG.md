@@ -1,4 +1,26 @@
 
+<a name="0.2.0">Release 0.2.0</a>
+## [0.2.0](https://github.com/rendler-denis/tf-proxmox-mod/compare/0.1.2...0.2.0) (2025-01-09)
+
+### Bug Fixes
+
+* target_node when ha changes target
+
+### Documentation
+
+* update docs on ignored props
+
+### Features
+
+* add HA support
+
+### Pull Requests
+
+* Merge pull request [#11](https://github.com/rendler-denis/tf-proxmox-mod/issues/11) from rendler-denis/develop
+* Merge pull request [#10](https://github.com/rendler-denis/tf-proxmox-mod/issues/10) from rendler-denis/fix/target-node-with-ha
+* Merge pull request [#9](https://github.com/rendler-denis/tf-proxmox-mod/issues/9) from rendler-denis/feat/add-ha-support
+
+
 <a name="0.1.2">Release 0.1.2</a>
 ## [0.1.2](https://github.com/rendler-denis/tf-proxmox-mod/compare/0.1.1...0.1.2) (2025-01-02)
 
