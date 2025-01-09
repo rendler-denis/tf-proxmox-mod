@@ -37,6 +37,9 @@ resource "proxmox_lxc" "pve_lxc" {
   vmid   = var.vmid
   start  = var.state
 
+  hagroup = var.hagroup
+  hastate = var.hastate
+
   ssh_public_keys = var.ssh_keys
   password        = var.root_pass
 
