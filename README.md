@@ -40,6 +40,8 @@ module "pve_lxc" {
   hdd_size     = each.value.hdd_size
   storage_name = each.value.storage_name
   net          = each.value.net
+  hagroup      = each.value.hagroup
+  hastate      = each.value.hastate
 
   proxmox_ssh = var.proxmox_ssh
 }
