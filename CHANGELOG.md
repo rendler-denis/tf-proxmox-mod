@@ -1,4 +1,17 @@
 
+<a name="0.3.0">Release 0.3.0</a>
+## [0.3.0](https://github.com/rendler-denis/tf-proxmox-mod/compare/0.2.0...0.3.0) (2025-01-19)
+
+### Features
+
+* add vars to install ssh on demand
+
+### Pull Requests
+
+* Merge pull request [#16](https://github.com/rendler-denis/tf-proxmox-mod/issues/16) from rendler-denis/develop
+* Merge pull request [#15](https://github.com/rendler-denis/tf-proxmox-mod/issues/15) from rendler-denis/feat/install-ssh-on-demand
+
+
 <a name="0.2.0">Release 0.2.0</a>
 ## [0.2.0](https://github.com/rendler-denis/tf-proxmox-mod/compare/0.1.2...0.2.0) (2025-01-09)
 
