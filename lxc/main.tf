@@ -84,6 +84,7 @@ resource "proxmox_lxc" "pve_lxc" {
 // This is required as most LXC templates do not have SSH installed
 // and we need to install it to be able to run Ansible for further configuration
 resource "null_resource" "install_ssh" {
+  count      = var.install_ssh ? 1 : 0
   depends_on = [proxmox_lxc.pve_lxc]
 
   provisioner "local-exec" {
