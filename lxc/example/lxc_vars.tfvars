@@ -25,7 +25,8 @@ lxc = {
     state      = true,
     swap       = 1024,
     target     = "pve",
-    vmid       = 12345
+    vmid       = 12345,
+    install_ssh = true
   }
 }
 
