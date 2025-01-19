@@ -155,8 +155,3 @@ variable "hastate" {
     error_message = "hastate must be one of 'started', 'stopped', 'ignored', 'disabled', or 'null'."
   }
 }
-
-variable "install_ssh" {
-  type    = bool
-  default = false
-}
